@@ -2,7 +2,7 @@
 
 
 
-abstract class DataBoundObject {
+abstract class DataBoundObject2 {
 
    protected $ID;
    protected $objPDO;
@@ -11,20 +11,6 @@ abstract class DataBoundObject {
    protected $blForDeletion;
    protected $blIsLoaded;
    protected $arModifiedRelations;
-
-  protected $connectionString = "file:parse\prova.log";
-
-protected $urlData;
-protected $fileName;
-protected $className;
-protected $log;
-
-protected $connectionStringDB = "postgres:parse\prova.log";
-
-protected $urlDataDB;
-protected $fileNameDB;
-protected $classNameDB;
-protected $logDB;
 
    abstract protected function DefineTableName();
    abstract protected function DefineRelationMap();
@@ -40,33 +26,6 @@ protected $logDB;
          $this->ID = $id;
       };
       $this->arModifiedRelations = array();
-
-      $this->urlData = parse_url($this->connectionString);
-
- $this->fileName = 'Logger/class.' . $this->urlData['scheme'] . 'LoggerBackend.php';
-
-include_once($this->fileName);
-
-$this->className = $this->urlData['scheme'] . 'LoggerBackend';
-
-$this->log = $this->className::getInstance();
-
-
-
-$this->urlDataDB = parse_url($this->connectionStringDB);
-
-$this->fileNameDB = 'Logger/class.' . $this->urlDataDB['scheme'] . 'LoggerBackend.php';
-
-include_once($this->fileNameDB);
-
-$this->classNameDB = $this->urlDataDB['scheme'] . 'LoggerBackend';
-
-echo "GetInstance";
-$this->logDB = $this->classNameDB::getInstance();
-
-
-
-
        
    }
 
@@ -121,8 +80,6 @@ $this->logDB = $this->classNameDB::getInstance();
             };
          };
          $objStatement->execute();
-         $this->log->logMessage($this->ID, $this->getIsActive(), $this->className::INFO , 'UserApp Updated');
-         $this->logDB->logMessage($this->ID, $this->getIsActive(), $this->className::INFO , 'UserApp Updated');
       } else {
          $strValueList = "";
          $strQuery = 'INSERT INTO "' . $this->strTableName . '"(';
@@ -157,10 +114,8 @@ $this->logDB = $this->classNameDB::getInstance();
          }
          $objStatement->execute();
          
-         $this->ID = $this->objPDO->lastInsertId($this->strTableName . "_id_seq");
+         // $this->ID = $this->objPDO->lastInsertId($this->strTableName . "_id_seq");
          
-         $this->log->logMessage($this->ID, $this->getIsActive(), $this->className::CRITICAL , 'UserApp saved');
-         $this->logDB->logMessage($this->ID, $this->getIsActive(), $this->className::CRITICAL , 'UserApp saved');
       }
    }
 
@@ -176,8 +131,6 @@ $this->logDB = $this->classNameDB::getInstance();
             $objStatement = $this->objPDO->prepare($strQuery);
             $objStatement->bindValue(':eid', $this->ID, PDO::PARAM_INT);   
             $objStatement->execute();
-            $this->log->logMessage($this->ID, $this->getIsActive(), $this->className::WARNING , 'UserApp deleted');
-            $this->logDB->logMessage($this->ID, $this->getIsActive(), $this->className::WARNING , 'UserApp deleted');
          };
       }
    }
@@ -203,21 +156,9 @@ $this->logDB = $this->classNameDB::getInstance();
          } else {
             eval('$this->' . $strMember . ' = "' . $strNewValue . '";');
          };
-         $id='NoID';
-         $idDB=NULL;
          if (isset($this->ID)) {
             $id=$this->ID;
-            $idDB=$this->ID;
          }
-         $isAct='NoValueIsActive';
-         $isActDB = NULL;
-         
-         if ($this->getIsActive()!==NULL){
-            $isAct=$this->getIsActive(); 
-            $isActDB=$this->getIsActive();
-         }
-         $this->log->logMessage($id, $isAct, $this->className::NOTICE , 'Set '.$strMember);
-         $this->logDB->logMessage($idDB, $isActDB, $this->className::NOTICE , 'Set '.$strMember);
          $this->arModifiedRelations[$strMember] = "1";
          
       } else {

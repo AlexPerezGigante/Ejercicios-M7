@@ -3,11 +3,12 @@
         require("class.pdofactory.php");
         require("class.userApp.php");
 
+        
+
         print "Running...<br />";
 
         $strDSN = "pgsql:dbname=database;host=localhost;port=5432";
-        $objPDO = PDOFactory::GetPDO($strDSN, "postgres", "root", 
-            array());
+        $objPDO = PDOFactory::GetPDO($strDSN, "postgres", "root", array());
         $objPDO->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
         $objUser = new UserApp($objPDO);
 
@@ -18,6 +19,8 @@
         $objUser->setIsActive(true);
         print "Saving...<br />";
         $objUser->Save();
+
+        
 
         
         $id = $objUser->getID();
