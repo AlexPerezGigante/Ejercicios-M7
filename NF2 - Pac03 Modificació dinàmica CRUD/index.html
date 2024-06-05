@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>jQuery Form Example</title>
+    <link
+      rel="stylesheet"
+      href="//netdna.bootstrapcdn.com/bootstrap/3.0.3/css/bootstrap.min.css"
+    />
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+</head>
+  <body>
+    <div class="col-sm-6 col-sm-offset-3">
+      <h1>Processing an AJAX Form</h1>
+      <script src="form.js"></script>
+      <form action="process.php" method="POST">
+        <div id="command-group" class="form-group">
+          <label for="prompt"></label>
+          <input
+            type="text"
+            class="form-control"
+            id="prompt"
+            name="prompt"
+            placeholder="prompt"
+            
+          />
+        </div>
+        
+
+        <!-- <div id="email-group" class="form-group">
+          <label for="email">Email</label>
+          <input
+            type="text"
+            class="form-control"
+            id="email"
+            name="email"
+            placeholder="email@example.com"
+          />
+        </div>
+
+        <div id="superhero-group" class="form-group">
+          <label for="superheroAlias">Superhero Alias</label>
+          <input
+            type="text"
+            class="form-control"
+            id="superheroAlias"
+            name="superheroAlias"
+            placeholder="Ant Man, Wonder Woman, Black Panther, Superman, Black Widow"
+          />
+        </div> -->
+
+        
+      </form>
+      <div class="res"></div>
+      <div id="table"></div>
+    </div>
+  </body>
+</html>
